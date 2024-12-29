@@ -2,21 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const path = require("path");
 const { errors } = require("celebrate");
-const apiKey = process.env.API_key;
-const User = require("./models/user");
 const { errorHandler } = require("./middlewares/error-handler");
 const { PORT = 3000 } = process.env;
 const app = express();
 const mainRouter = require("./routes/index");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
-
-app.use(express.static(path.join(__dirname, "build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/tunespotDB")
