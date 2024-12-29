@@ -6,7 +6,7 @@ const { errors } = require("celebrate");
 const apiKey = process.env.API_key;
 const User = require("./models/user");
 const { errorHandler } = require("./middlewares/error-handler");
-const { PORT = 3000 } = process.env;
+const { PORT = 3000 } = process.env.PORT;
 const app = express();
 const mainRouter = require("./routes/index");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
