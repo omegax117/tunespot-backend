@@ -18,6 +18,20 @@ const validateId = celebrate({
   }),
 });
 
+const validateItem = celebrate({
+  params: Joi.object().keys({
+    strTrack: Joi.string().required().min(1).max(300).messages({
+      "string.min": "The minimum length of a title is 1 character",
+      "string.max": "The maximum length of a title is 300 characters",
+      "string.empty": "There must be a title of a track",
+    }),
+    strMusicVid: Joi.string().required().custom(validateURL).messages({
+      "string.empty": 'The "Music Video Link" field must be filled in',
+      "string.uri": 'The "Music Video Link" field must be a valid url',
+    }),
+  }),
+});
+
 const validateNewUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30).messages({
@@ -58,4 +72,5 @@ module.exports = {
   validateURL,
   validateNewUser,
   validateUserLogin,
+  validateItem,
 };

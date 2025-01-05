@@ -6,7 +6,7 @@ const { ForbiddenError } = require("../middlewares/ForbiddenError");
 
 const getItems = (req, res, next) => {
   videoCard
-    .find({})
+    .find({ owner: req.user._id })
     .then((items) => res.status(200).send(items))
     .catch((err) => {
       next(err);

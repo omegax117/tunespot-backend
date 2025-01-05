@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { validateId } = require("../middlewares/validation");
+const { validateId, validateItem } = require("../middlewares/validation");
 
 const {
   createItem,
@@ -8,8 +8,8 @@ const {
 } = require("../controllers/videoCard");
 const auth = require("../middlewares/auth");
 
-router.post("/", auth, createItem);
-router.get("/", getItems);
+router.post("/", auth, validateItem, createItem);
+router.get("/", auth, getItems);
 router.delete("/:itemId", auth, validateId, deleteItem);
 
 module.exports = router;

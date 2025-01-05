@@ -6,7 +6,6 @@ const { errorMessages } = require("../utils/errors");
 const { ConflictError } = require("../middlewares/ConflictError");
 const { BadRequestError } = require("../middlewares/BadRequestError");
 const { UnathorizedError } = require("../middlewares/UnathorizedError");
-const { NotFoundError } = require("../middlewares/NotFoundError");
 
 const createUser = (req, res, next) => {
   const { name, email, password, avatar } = req.body;

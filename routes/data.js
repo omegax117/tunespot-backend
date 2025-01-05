@@ -2,7 +2,7 @@ require("dotenv").config();
 const router = require("express").Router();
 const axios = require("axios");
 
-router.get("/data", async (req, res) => {
+router.get("/data", async (req, res, next) => {
   const query = req.query.name;
   console.log(req.query.name);
   console.log(process.env.API_KEY);
@@ -12,7 +12,7 @@ router.get("/data", async (req, res) => {
     );
     res.status(response.status).send(response.data);
   } catch (error) {
-    res.status(500).send("Error fetching data");
+    next(error);
   }
 });
 

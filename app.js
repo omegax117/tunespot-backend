@@ -8,9 +8,12 @@ const { PORT = 3000 } = process.env;
 const app = express();
 const mainRouter = require("./routes/index");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
+const helmet = require("helmet");
+const { limiter } = require("./middlewares/rateLimit");
+const mongo = process.env.MONGOOSE;
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/tunespotDB")
+  .connect(mongo)
   .then(() => {
     console.log("Connected to DB");
   })
@@ -27,6 +30,17 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "script-src": ["'self'", "example.com"],
+      },
+    },
+  })
+);
+
+app.use(limiter);
 app.use("/", mainRouter);
 
 app.use(errorLogger);
