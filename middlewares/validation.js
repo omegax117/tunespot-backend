@@ -19,7 +19,7 @@ const validateId = celebrate({
 });
 
 const validateItem = celebrate({
-  params: Joi.object().keys({
+  body: Joi.object().keys({
     strTrack: Joi.string().required().min(1).max(300).messages({
       "string.min": "The minimum length of a title is 1 character",
       "string.max": "The maximum length of a title is 300 characters",

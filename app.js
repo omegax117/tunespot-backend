@@ -2,18 +2,19 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const helmet = require("helmet");
 const { errors } = require("celebrate");
 const { errorHandler } = require("./middlewares/error-handler");
-const { PORT = 3000 } = process.env;
-const app = express();
 const mainRouter = require("./routes/index");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
-const helmet = require("helmet");
 const { limiter } = require("./middlewares/rateLimit");
-const mongo = process.env.MONGOOSE;
+
+const { MONGOOSE = "mongodb://127.0.0.1:27017/tunespotDB" } = process.env;
+const { PORT = 3000 } = process.env;
+const app = express();
 
 mongoose
-  .connect(mongo)
+  .connect(MONGOOSE)
   .then(() => {
     console.log("Connected to DB");
   })
