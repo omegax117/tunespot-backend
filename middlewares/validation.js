@@ -19,6 +19,7 @@ const validateId = celebrate({
 });
 
 const validateItem = celebrate({
+  // the strTrackThumb is not required, as it will sometimes expectedly return "null" from the third party API
   body: Joi.object().keys({
     strTrack: Joi.string().required().min(1).max(300).messages({
       "string.min": "The minimum length of a title is 1 character",
@@ -28,6 +29,12 @@ const validateItem = celebrate({
     strMusicVid: Joi.string().required().custom(validateURL).messages({
       "string.empty": 'The "Music Video Link" field must be filled in',
       "string.uri": 'The "Music Video Link" field must be a valid url',
+    }),
+    strTrackThumb: Joi.string().custom(validateURL).messages({
+      "string.empty":
+        'The "Music Video thumbnail Link" field must be filled in',
+      "string.uri":
+        'The "Music Video thumbnail Link" field must be a valid url',
     }),
   }),
 });

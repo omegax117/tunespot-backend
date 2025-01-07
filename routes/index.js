@@ -7,16 +7,11 @@ const {
 } = require("../middlewares/validation");
 const { createUser, login } = require("../controllers/users");
 const dataRouter = require("./data");
-const { NotFoundError } = require("../middlewares/NotFoundError");
-const { errorMessages } = require("../utils/errors");
-const { BadRoute } = require("../middlewares/BadRoute");
 
 router.use("/api", dataRouter);
 router.use("/users", userRouter);
 router.use("/mvids", videoRouter);
 router.post("/signin", validateUserLogin, login);
 router.post("/signup", validateNewUser, createUser);
-router.post("*", BadRoute);
-router.use((req, res, next) => next(new NotFoundError(errorMessages.badRoute)));
 
 module.exports = router;
